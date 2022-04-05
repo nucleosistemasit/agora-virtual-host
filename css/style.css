@@ -166,7 +166,6 @@ p{
 .messages-div{
     width: calc(100vw - 35vw - 100px);
     height: 100vh;
-    background-color: rgb(50, 214, 118);
     left: calc(35vw + 100px);
 }
 

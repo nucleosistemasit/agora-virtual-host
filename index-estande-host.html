@@ -5,17 +5,43 @@
         <link rel="icon" type="image/x-icon" href="imgs/Senior_Logo.png">
         <!-- Referênciar outros arquivos. -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
         <link rel="stylesheet" href="css/style-estande-host.css">
     </head>
 <body>
     <div class="search-bar-div">
-        <input type="text" placeholder="Localizar chats..." class="input-field"> 
-        <i class="glyphicon glyphicon-menu-hamburger"></i>
-        <i class="glyphicon glyphicon-search"></i>
+        <div class="row dash-name">
+            <div class="col-3">
+                <span id="status" class="conn-off">Offline</span>
+            </div>
+            <div class="col-2">
+                <button id="host-picture" class="profile-picture" onclick="pictureEdit()"></button>
+                <div id="pictureMenu" class="picture-menu picture-menu-closed col-12">
+                    <label for="picture-input" class="picture-input-label">Editar</label>
+                    <input id="picture-input" type="file" onclick="pictureEdit()"/>
+                    <label for="delete-picture" class="picture-delete-label">Excluir</label>
+                    <button id="delete-picture" class="delete-picture" onclick="pictureEdit()"></button>
+                </div> 
+            </div>
+            <div class="col-3">
+                <span id="host-name"></span>
+            </div>
+            <div class="col-4">
+                <label for="conexoes"><strong>Conexões: </strong></label>
+                <span id="conexoes">0</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <input type="text" placeholder="Localizar chats..." class="input-field"> 
+                <i class="glyphicon glyphicon-menu-hamburger"></i>
+                <button id="download-csv">Exportar CSV</button>
+                <i class="glyphicon glyphicon-search"></i>
+            </div>
+        </div>
     </div>
-    <div class="inbox-div">
-        <div class="inner-inbox-div-selected">
+    <div id="room-list" class="inbox-div">
+        <!-- <div class="inner-inbox-div-selected">
             <div class="inbox-icon-div">
                 <i class="glyphicon glyphicon-envelope"></i>
             </div>
@@ -56,9 +82,30 @@
             <div>
                 <p class="p-time-date">14<strong>:</strong>38 - 18/10/2021</p>
             </div>
-        </div>
+        </div> -->
     </div>
-    <div class="messages-div"><div>
+    <div class="messages-div">
+        <div id="chat" class="row chat chat-client">	
+        </div>
+        <span class="scroll-to-bottom-btn"><i id="scrollToBottomBtn" class="fas fa-caret-down"></i></span>
+        <div id="replyPreview" class="reply-preview reply-off" data-id="">
+            <strong id="sReplyChat" class="s-reply-chat">Milton</strong>
+            <span class="reply-close"><i class="fas fa-close" onclick="closeReply()"></i></span>
+            <span id="replyChat" class="reply-chat">
+              Ola, tudo bem? Queria saber o que você acho do front dessa pagina legal do chat que eu fiz para a palestra do evento da Senior X Store
+            </span>
+        </div>
+        <div class="row msg-box">
+            <textarea id="message-content" class="type-msg col-10" placeholder="Mensagem..."></textarea>
+            <button id="send-message" class="col-2 btn btn-send-msg"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    <div>
+    <script src="js/reconnecting-websocket.min.js"></script>
+    <script src="js/linkify.min.js"></script>
+    <script src="js/linkify-html.min.js"></script>
+    <script defer src="js/fontawesome/all.min.js"></script>
+    <script src="js/main.js"></script> 
+    <script src="js/bootstrap.min.js"></script>
 </body>
 <footer> 
 </footer>
