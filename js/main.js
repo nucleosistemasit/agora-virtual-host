@@ -1,5 +1,6 @@
 var chatSocket = null;
 var current_page = 1;
+var room_page = 1;
 
 var entityMap = {
     '<': '&lt;',
@@ -48,6 +49,20 @@ function setInfiniteScroll() {
     chatContainer.addEventListener("scroll", loadNextPage);
 }
 
+function loadNextRoom(event) {
+    let roomContainer = document.getElementById("room-list");
+    if (Math.abs(roomContainer.scrollHeight - roomContainer.scrollTop - roomContainer.clientHeight) < 3) {
+        roomContainer.removeEventListener("scroll", loadNextRoom);
+        chatSocket.send(JSON.stringify({"command": "list_rooms", page_number: room_page}));
+    }
+}
+
+function setRoomScroll() {
+    let roomContainer = document.getElementById("room-list");
+    roomContainer.removeEventListener("scroll", loadNextRoom);
+    roomContainer.addEventListener("scroll", loadNextRoom);
+}
+
 function toggleReaction(element) {
     let reaction_type = element.dataset.reaction;
     let id = element.closest('.msg-container').dataset.id;
@@ -70,6 +85,9 @@ let authToken = localStorage.getItem('authToken');
 chatSocket = new ReconnectingWebSocket('ws://127.0.0.1:8000/ws/chat/exhibition/?token=' + authToken);
 
 chatSocket.onopen = function(e) {
+    document.getElementById('room-list').innerHTML = "";
+    document.getElementById('chat').innerHTML = "";
+    room_page = 1;
     document.getElementById("status").innerHTML = "Online";
     document.getElementById("status").classList.add('conn-on');
     document.getElementById("status").classList.remove('conn-off');
@@ -131,7 +149,7 @@ function printMessage (data, messageBlock, scrollToBottom) {
                                 reactionNode +                                        
                                 '</span>' +
                                 '<span class="msg-timestamp">' +
-                                data.created_at.split(" ")[1] +
+                                data.created_at +
                                 '</span>' +
                                 messageMenu +
                                 '</p>' +
@@ -184,6 +202,20 @@ chatSocket.onmessage = function(e) {
         for (let room of data.rooms) {
             printRoom(room);
         }
+        room_page++;
+        if (data.has_next_page) {
+            setRoomScroll();
+        }
+    }
+    else if (data.type == 'chat_notification') {
+        if (document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]') != null) {
+            document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]').querySelector('.p-inbox-message-preview').innerHTML = data.last_message_content;
+            document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]').querySelector('.p-time-date').innerHTML = data.last_message_created_at;
+        }
+        else {
+            printRoom(data);
+        }
+        document.getElementById('room-list').prepend(document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]'));
     }
     else if (data.type == 'chat_message') {
         let messageBlock = document.getElementById('chat');

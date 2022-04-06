@@ -67,6 +67,7 @@ p{
     min-width: 200px;
     margin-top: 13vh;
     background-color: rgb(240, 240, 240);
+    overflow-y: auto;
 }
 .inbox-icon-div{
     border-radius: 40px;
@@ -78,6 +79,10 @@ p{
     margin-left: 40px;
     outline: 3px outset rgba(202, 196, 196, 0.116);
     box-shadow: 0 0px 10px rgb(0 0 0 / 20%)
+}
+.inbox-icon {
+    height: 50px;
+    width: 50px;
 }
 .inner-inbox-div-selected{
     width: 100%;
