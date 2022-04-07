@@ -53,7 +53,7 @@ function loadNextRoom(event) {
     let roomContainer = document.getElementById("room-list");
     if (Math.abs(roomContainer.scrollHeight - roomContainer.scrollTop - roomContainer.clientHeight) < 3) {
         roomContainer.removeEventListener("scroll", loadNextRoom);
-        chatSocket.send(JSON.stringify({"command": "list_rooms", page_number: room_page}));
+        chatSocket.send(JSON.stringify({"command": "list_rooms", page_number: room_page, search: document.getElementById("chat-search-input").value}));
     }
 }
 
@@ -80,6 +80,37 @@ function connectRoom(element) {
     let id = element.dataset.id;
     chatSocket.send(JSON.stringify({"command": "connect", "room": id}));
 }
+
+function debounce(func, wait, immediate) {
+    var timeout;
+  
+    return function executedFunction() {
+      var context = this;
+      var args = arguments;
+          
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+  
+      var callNow = immediate && !timeout;
+      
+      clearTimeout(timeout);
+  
+      timeout = setTimeout(later, wait);
+      
+      if (callNow) func.apply(context, args);
+    };
+};
+
+var chatSearch = debounce(function() {
+    room_page = 1;
+    document.getElementById('room-list').innerHTML = "";
+    chatSocket.send(JSON.stringify({"command": "list_rooms", page_number: room_page, search: document.getElementById("chat-search-input").value}));
+}, 500);
+
+let searchInput = document.getElementById('chat-search-input');
+searchInput.addEventListener('keyup', chatSearch);
 
 let authToken = localStorage.getItem('authToken');
 chatSocket = new ReconnectingWebSocket('ws://127.0.0.1:8000/ws/chat/exhibition/?token=' + authToken);
