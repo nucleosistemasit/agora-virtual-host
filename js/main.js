@@ -116,9 +116,12 @@ let authToken = localStorage.getItem('authToken');
 chatSocket = new ReconnectingWebSocket('ws://127.0.0.1:8000/ws/chat/exhibition/?token=' + authToken);
 
 chatSocket.onopen = function(e) {
+    document.getElementById("chat").removeEventListener("scroll", loadNextPage);
+    document.getElementById("room-list").removeEventListener("scroll", loadNextRoom);
     document.getElementById('room-list').innerHTML = "";
     document.getElementById('chat').innerHTML = "";
     room_page = 1;
+    current_page = 1;
     document.getElementById("status").innerHTML = "Online";
     document.getElementById("status").classList.add('conn-on');
     document.getElementById("status").classList.remove('conn-off');
