@@ -300,7 +300,7 @@ chatSocket.onmessage = function(e) {
             document.getElementById("host-name").textContent = data.username;
         }
         if (data.profile_picture != null) {
-            document.getElementById("host-picture").style.backgroundImage = "url(" + data.profile_picture + ")";
+            document.getElementById("profile-picture").style.backgroundImage = "url(" + data.profile_picture + ")";
         }
         if (data.permissions.includes('chat.can_export_exhibition_to_csv')) {
             document.getElementById("download-csv").style.display = '';
@@ -391,7 +391,7 @@ pictureInput.addEventListener("change", function(event) {
         fetch(url, options)
             .then( res => res.json() )
             .then( response_json => {
-                document.getElementById("host-picture").style.backgroundImage = "url(" + response_json.profile_picture + ")";
+                document.getElementById("profile-picture").style.backgroundImage = "url(" + response_json.profile_picture + ")";
                 event.target.value = "";
             });
     }
@@ -408,6 +408,6 @@ deletePicture.addEventListener("click", function() {
     };
     fetch(url, options)
         .then( res => {
-            document.getElementById("host-picture").style.backgroundImage = "";
+            document.getElementById("profile-picture").style.backgroundImage = "";
         });
 });
