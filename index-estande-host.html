@@ -9,40 +9,37 @@
         <link rel="stylesheet" href="css/style-estande-host.css">
     </head>
 <body>
-    <div class="search-bar-div">
+    <div class="side-panel container-fluid">
         <div class="row dash-name">
-            <div class="col-3">
-                <span id="status" class="conn-off">Offline</span>
-            </div>
-            <div class="col-2">
-                <button id="host-picture" class="profile-picture" onclick="pictureEdit()"></button>
-                <div id="pictureMenu" class="picture-menu picture-menu-closed col-12">
+            <div class="col-3 text-center m-auto">
+                <span id="profile-picture" class="profile-picture align-middle">
+                    <div id="pictureMenu" class="picture-menu picture-menu-closed col-12">
                     <label for="picture-input" class="picture-input-label">Editar</label>
-                    <input id="picture-input" type="file" onclick="pictureEdit()"/>
+                    <input id="picture-input" type="file" accept="image/png, image/jpeg, image/jpg"/>
                     <label for="delete-picture" class="picture-delete-label">Excluir</label>
-                    <button id="delete-picture" class="delete-picture" onclick="pictureEdit()"></button>
-                </div> 
+                    <button id="delete-picture" class="delete-picture"></button>
+                    </div> 
+                </span>
             </div>
-            <div class="col-3">
+            <div class="col-3 text-center m-auto">
                 <span id="host-name"></span>
             </div>
-            <div class="col-4">
-                <label for="conexoes"><strong>Conexões: </strong></label>
-                <span id="conexoes">0</span>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-12">
-                <input id="chat-search-input" type="text" placeholder="Pesquisar conversas..." class="input-field"> 
-                <i class="glyphicon glyphicon-menu-hamburger"></i>
-                <button id="download-csv">Exportar CSV</button>
-                <i class="glyphicon glyphicon-search"></i>
+                <input id="chat-search-input" type="text" placeholder="Pesquisar conversas..." class="input-field align-middle"> 
+                <!-- <i class="fa-solid fa-bars"></i> -->
+                <!-- <button id="download-csv">Exportar CSV</button> -->
+                <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
             </div>
         </div>
     </div>
     <div id="room-list" class="inbox-div">
     </div>
-    <div class="messages-div">
+    <div class="messages-div container-fluid">
+        <div class="row dash-chat">
+            <div class="col-12">                  
+                <button id="download-csv"><i class="fa-solid fa-file-export"></i></button>
+            </div>
+        </div>
         <div id="chat" class="row chat chat-client">	
         </div>
         <span class="scroll-to-bottom-btn"><i id="scrollToBottomBtn" class="fas fa-caret-down"></i></span>

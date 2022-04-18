@@ -122,9 +122,9 @@ chatSocket.onopen = function(e) {
     document.getElementById('chat').innerHTML = "";
     room_page = 1;
     current_page = 1;
-    document.getElementById("status").innerHTML = "Online";
-    document.getElementById("status").classList.add('conn-on');
-    document.getElementById("status").classList.remove('conn-off');
+    // document.getElementById("status").innerHTML = "Online";
+    // document.getElementById("status").classList.add('conn-on');
+    // document.getElementById("status").classList.remove('conn-off');
     chatSocket.send(JSON.stringify({"command": "list_rooms"}));
 };
 
@@ -146,14 +146,14 @@ function printMessage (data, messageBlock, scrollToBottom) {
         }
         peerNode.classList.add('msg-container');
         let messageMenu = '<span id="messageMenu" class="msg-menu">' +
-                                '<span id="replyMenu-' + data.id + '" class="menu-reply" onclick="sendReply(this)">⬅</span>' +      
+                                '<span id="replyMenu-' + data.id + '" class="menu-reply" onclick="sendReply(this)"><i class="fa-solid fa-reply"></i></span>' +
                                 '<span id="reactionMenu-' + data.id + '" class="menu-reactions">' +
-                                '<span class="reaction-menu" data-reaction="1" onclick="toggleReaction(this)">👍</span>' +
-                                '<span class="reaction-menu" data-reaction="2" onclick="toggleReaction(this)">👏</span>' +
-                                '<span class="reaction-menu" data-reaction="3" onclick="toggleReaction(this)">❤</span>' +
-                                '<span class="reaction-menu" data-reaction="4" onclick="toggleReaction(this)">🙌</span>' +
-                                '<span class="reaction-menu" data-reaction="5" onclick="toggleReaction(this)">😮</span>' +
-                                '<span class="reaction-menu" data-reaction="6" onclick="toggleReaction(this)">🤣</span>' +
+                                '<span class="reaction" data-reaction="1" onclick="toggleReaction(this)">👍</span>' +
+                                '<span class="reaction" data-reaction="2" onclick="toggleReaction(this)">👏</span>' +
+                                '<span class="reaction" data-reaction="3" onclick="toggleReaction(this)">❤</span>' +
+                                '<span class="reaction" data-reaction="4" onclick="toggleReaction(this)">🙌</span>' +
+                                '<span class="reaction" data-reaction="5" onclick="toggleReaction(this)">😮</span>' +
+                                '<span class="reaction" data-reaction="6" onclick="toggleReaction(this)">🤣</span>' +
                                 '</span>' +
                             '</span>';
         let reactionNode = '';
@@ -260,7 +260,7 @@ chatSocket.onmessage = function(e) {
         messageBlock.classList.add("message-block");
         document.getElementById('chat').prepend(messageBlock);
         connectionCount = data.connections;
-        document.getElementById('conexoes').innerHTML = data.connections;
+        // document.getElementById('conexoes').innerHTML = data.connections;
         for (message of data.messages) {
             printMessage(message, messageBlock, false);
         }
