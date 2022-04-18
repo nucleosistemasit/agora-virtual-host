@@ -102,6 +102,7 @@ p {
     display: inline-block;
     background-color: rgb(255, 255, 255);
     cursor: pointer;
+    margin-top: 2px;
 }
 
 .p-time-date-selected{
