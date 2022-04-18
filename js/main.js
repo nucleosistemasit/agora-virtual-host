@@ -207,7 +207,7 @@ function printRoom(data) {
     roomNode.dataset.id = data.id;
     roomNode.setAttribute('onclick', 'connectRoom(this)');
     roomNode.innerHTML = '<div class="inbox-icon-div">' +
-                            '<img class="inbox-icon" src="' + (data.client_picture || "") + '">' +
+                            '<img class="inbox-icon" src="' + (data.client_picture || "css/default_pic.jpg") + '">' +
                         '</div>' +
                         '<div class="p-inbox-contactname">' +
                                 '<strong>' + 
@@ -408,6 +408,6 @@ deletePicture.addEventListener("click", function() {
     };
     fetch(url, options)
         .then( res => {
-            document.getElementById("profile-picture").style.backgroundImage = "";
+            document.getElementById("profile-picture").style.backgroundImage = "url(css/default_pic.jpg)";
         });
 });
