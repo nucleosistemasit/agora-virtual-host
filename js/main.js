@@ -113,7 +113,7 @@ let searchInput = document.getElementById('chat-search-input');
 searchInput.addEventListener('keyup', chatSearch);
 
 let authToken = localStorage.getItem('authToken');
-chatSocket = new ReconnectingWebSocket('ws://127.0.0.1:8000/ws/chat/exhibition/?token=' + authToken);
+chatSocket = new ReconnectingWebSocket('wss://metaversochat.youbot.us/ws/chat/exhibition/?token=' + authToken);
 
 chatSocket.onopen = function(e) {
     document.getElementById("chat").removeEventListener("scroll", loadNextPage);
@@ -360,7 +360,7 @@ const pictureInput = document.getElementById("picture-input");
 const deletePicture = document.getElementById("delete-picture");
 
 exportCSV.addEventListener("click", function() {
-    const url = 'http://127.0.0.1:8000/api/export-chat/';
+    const url = 'https://metaversochat.youbot.us/api/export-chat/';
     const authHeader = 'Bearer ' + localStorage.getItem('authToken');
     const options = {
         headers: {
@@ -379,7 +379,7 @@ pictureInput.addEventListener("change", function(event) {
     if (event.target.files && event.target.files[0]) {
         const formData = new FormData();
         formData.append('profile_picture', event.target.files[0]);
-        const url = 'http://127.0.0.1:8000/api/profile-picture/';
+        const url = 'https://metaversochat.youbot.us/api/profile-picture/';
         const authHeader = 'Bearer ' + localStorage.getItem('authToken');
         const options = {
             method: "POST",
@@ -398,7 +398,7 @@ pictureInput.addEventListener("change", function(event) {
 });
 
 deletePicture.addEventListener("click", function() {
-    const url = 'http://127.0.0.1:8000/api/profile-picture/';
+    const url = 'https://metaversochat.youbot.us/api/profile-picture/';
     const authHeader = 'Bearer ' + localStorage.getItem('authToken');
     const options = {
         method: "DELETE",
