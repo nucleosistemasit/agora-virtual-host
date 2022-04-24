@@ -79,6 +79,7 @@ function connectRoom(element) {
     document.getElementById('chat').innerHTML = "";
     let id = element.dataset.id;
     chatSocket.send(JSON.stringify({"command": "connect", "room": id}));
+    // TODO: add "chat-selected" class to room
 }
 
 function debounce(func, wait, immediate) {
@@ -173,7 +174,7 @@ function printMessage (data, messageBlock, scrollToBottom) {
             }
             reactionNode += '<span class="reaction ' + reaction_sent + ' ' + reaction_visible + '" data-reaction="' + reaction_type + '" onclick="toggleReaction(this)">' + reaction_emojis[parseInt(reaction_type) - 1] + '<span class="react-quantity">' + reaction_quantity + '</span></span>';
         }
-
+        // TODO: add "data.attachment" URL
         peerNode.innerHTML = '<p class="p-messaged-chat"><strong class="s-messaged-chat">' + 
                                 escapeHtml(data.username) + 
                                 '</strong> ' + 
@@ -250,6 +251,10 @@ chatSocket.onmessage = function(e) {
             printRoom(data);
         }
         document.getElementById('room-list').prepend(document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]'));
+    }
+    else if (data.type == 'chat_stats') {
+        // TODO: show connections
+        console.log(data.connections);
     }
     else if (data.type == 'chat_message') {
         let messageBlock = document.getElementById('chat');
@@ -358,6 +363,22 @@ document.getElementById('message-content').addEventListener('keyup', function(e)
 const exportCSV = document.getElementById("download-csv");
 const pictureInput = document.getElementById("picture-input");
 const deletePicture = document.getElementById("delete-picture");
+const fileMessage = document.getElementById("file-message");
+
+fileMessage.addEventListener("change", function(event) {
+    if (event.target.files && event.target.files[0] && document.querySelector(".inner-inbox-div.chat-selected") != null) {
+        const formData = new FormData();
+        formData.append('attachment', event.target.files[0]);
+        formData.append('room', document.querySelector(".inner-inbox-div.chat-selected").dataset.id);
+        const url = 'https://metaversochat.youbot.us/api/user-file-upload/';
+        const options = {
+            method: "POST",
+            body: formData
+        };
+        fetch(url, options)
+            .then( res => event.target.value = "" );
+    }
+});
 
 exportCSV.addEventListener("click", function() {
     const url = 'https://metaversochat.youbot.us/api/export-chat/';
