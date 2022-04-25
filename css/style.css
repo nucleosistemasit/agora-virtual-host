@@ -3,6 +3,7 @@ a:hover {
     background-color: transparent;
     text-decoration: underline;
 }
+
 .icons-div, .search-bar-div, .inbox-div, .messages-div{
     position: absolute;
 }
@@ -18,6 +19,7 @@ p {
     text-align: center;
     /* z-index: 100; */
 }
+
 .inner-icons-div{
     border-radius: 50px;
     display: inline-block;
@@ -52,9 +54,11 @@ p {
     transform: translate(0%, -50%);
     
 }
+
 .glyphicon-menu-hamburger:hover{
     color: rgb(0, 188, 212)
 }
+
 .glyphicon-envelope{
     color: white;
 }

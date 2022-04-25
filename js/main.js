@@ -150,7 +150,7 @@ function printMessage (data, messageBlock, scrollToBottom) {
                                 '<span id="reactionMenu-' + data.id + '" class="menu-reactions">' +
                                 '<span class="reaction" data-reaction="1" onclick="toggleReaction(this)">👍</span>' +
                                 '<span class="reaction" data-reaction="2" onclick="toggleReaction(this)">👏</span>' +
-                                '<span class="reaction" data-reaction="3" onclick="toggleReaction(this)">❤</span>' +
+                                '<span class="reaction" data-reaction="3" onclick="toggleReaction(this)">💗</span>' +
                                 '<span class="reaction" data-reaction="4" onclick="toggleReaction(this)">🙌</span>' +
                                 '<span class="reaction" data-reaction="5" onclick="toggleReaction(this)">😮</span>' +
                                 '<span class="reaction" data-reaction="6" onclick="toggleReaction(this)">🤣</span>' +
@@ -356,8 +356,6 @@ document.getElementById('message-content').addEventListener('keyup', function(e)
 }});
 
 const exportCSV = document.getElementById("download-csv");
-const pictureInput = document.getElementById("picture-input");
-const deletePicture = document.getElementById("delete-picture");
 
 exportCSV.addEventListener("click", function() {
     const url = 'https://metaversochat.youbot.us/api/export-chat/';
@@ -372,42 +370,5 @@ exportCSV.addEventListener("click", function() {
         .then( blob => {
             let file = window.URL.createObjectURL(blob);
             window.location.assign(file);
-        });
-});
-
-pictureInput.addEventListener("change", function(event) {
-    if (event.target.files && event.target.files[0]) {
-        const formData = new FormData();
-        formData.append('profile_picture', event.target.files[0]);
-        const url = 'https://metaversochat.youbot.us/api/profile-picture/';
-        const authHeader = 'Bearer ' + localStorage.getItem('authToken');
-        const options = {
-            method: "POST",
-            headers: {
-                Authorization: authHeader
-            },
-            body: formData
-        };
-        fetch(url, options)
-            .then( res => res.json() )
-            .then( response_json => {
-                document.getElementById("profile-picture").style.backgroundImage = "url(" + response_json.profile_picture + ")";
-                event.target.value = "";
-            });
-    }
-});
-
-deletePicture.addEventListener("click", function() {
-    const url = 'https://metaversochat.youbot.us/api/profile-picture/';
-    const authHeader = 'Bearer ' + localStorage.getItem('authToken');
-    const options = {
-        method: "DELETE",
-        headers: {
-            Authorization: authHeader
-        }
-    };
-    fetch(url, options)
-        .then( res => {
-            document.getElementById("profile-picture").style.backgroundImage = "url(css/default_pic.jpg)";
         });
 });
