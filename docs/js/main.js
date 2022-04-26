@@ -79,7 +79,10 @@ function connectRoom(element) {
     document.getElementById('chat').innerHTML = "";
     let id = element.dataset.id;
     chatSocket.send(JSON.stringify({"command": "connect", "room": id}));
-    // TODO: add "chat-selected" class to room
+    for (let i of document.querySelectorAll(".inner-inbox-div")) {
+        i.classList.remove("chat-selected");
+    }
+    element.classList.add("chat-selected");
 }
 
 function debounce(func, wait, immediate) {
@@ -173,13 +176,13 @@ function printMessage (data, messageBlock, scrollToBottom) {
                 reaction_sent = data.sent_reactions.includes(parseInt(reaction_type)) ? "sent" : "";
             }
             reactionNode += '<span class="reaction ' + reaction_sent + ' ' + reaction_visible + '" data-reaction="' + reaction_type + '" onclick="toggleReaction(this)">' + reaction_emojis[parseInt(reaction_type) - 1] + '<span class="react-quantity">' + reaction_quantity + '</span></span>';
-        }
-        // TODO: add "data.attachment" URL
+        }        
         peerNode.innerHTML = '<p class="p-messaged-chat"><strong class="s-messaged-chat">' + 
                                 escapeHtml(data.username) + 
                                 '</strong> ' + 
                                 messageReply +
                                 '<span class="msg-content">' + linkifyHtml(escapeHtml(data.content), {target: '_blank'}) + '</span>' +
+                                ((data.attachment != null) ? "<a href='"+ data.attachment +"' class='download-attachment' target='_blank'><i class='fa-solid fa-file-arrow-down'></i></a>" : "") +
                                 '<span class="msg-reactions">' +
                                 reactionNode +                                        
                                 '</span>' +
@@ -253,8 +256,8 @@ chatSocket.onmessage = function(e) {
         document.getElementById('room-list').prepend(document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]'));
     }
     else if (data.type == 'chat_stats') {
-        // TODO: show connections
-        console.log(data.connections);
+        if ()
+        document.getElementById("connectionsId").innerHTML = data.connections;
     }
     else if (data.type == 'chat_message') {
         let messageBlock = document.getElementById('chat');
@@ -368,10 +371,14 @@ fileMessage.addEventListener("change", function(event) {
         const formData = new FormData();
         formData.append('attachment', event.target.files[0]);
         formData.append('room', document.querySelector(".inner-inbox-div.chat-selected").dataset.id);
+        const authHeader = 'Bearer ' + localStorage.getItem('authToken');
         const url = 'https://metaversochat.youbot.us/api/user-file-upload/';
         const options = {
             method: "POST",
-            body: formData
+            body: formData,
+            headers: {
+                Authorization: authHeader
+            }
         };
         fetch(url, options)
             .then( res => event.target.value = "" );
