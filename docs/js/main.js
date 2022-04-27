@@ -218,6 +218,12 @@ function printRoom(data) {
                                 '<strong>' + 
                                     data.client_name + 
                                 '</strong>' +
+                                '<span> - ' +
+                                    data.client_company_name +
+                                '</span>' +
+                               '<span>(' +
+                                    data.client_email +
+                                ')</span>' +
                         '</div>' +
                         '<div>' +
                             '<p class="p-inbox-message-preview">' +
