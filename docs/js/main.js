@@ -83,6 +83,7 @@ function connectRoom(element) {
         i.classList.remove("chat-selected");
     }
     element.classList.add("chat-selected");
+    element.classList.remove("show-notification");
 }
 
 function debounce(func, wait, immediate) {
@@ -249,6 +250,10 @@ chatSocket.onmessage = function(e) {
         if (document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]') != null) {
             document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]').querySelector('.p-inbox-message-preview').innerHTML = data.last_message_content;
             document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]').querySelector('.p-time-date').innerHTML = data.last_message_created_at;
+            if (data.from_me == false) {
+                let notification = document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]');
+                notification.classList.add("show-notification");
+            }
         }
         else {
             printRoom(data);
