@@ -256,8 +256,9 @@ chatSocket.onmessage = function(e) {
         document.getElementById('room-list').prepend(document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]'));
     }
     else if (data.type == 'chat_stats') {
-        if ()
-        document.getElementById("connectionsId").innerHTML = data.connections;
+        if (data.connections > 0) {
+            document.getElementById("connectionsId").innerHTML = data.connections;
+        }        
     }
     else if (data.type == 'chat_message') {
         let messageBlock = document.getElementById('chat');
