@@ -218,10 +218,10 @@ function printRoom(data) {
                                 '<strong>' + 
                                     data.client_name + 
                                 '</strong>' +
-                                '<span> - ' +
+                                '<span class="client-company-name"> - ' +
                                     data.client_company_name +
                                 '</span>' +
-                               '<span>(' +
+                               '<span class="client-email"> (' +
                                     data.client_email +
                                 ')</span>' +
                         '</div>' +
