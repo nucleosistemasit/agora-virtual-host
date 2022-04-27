@@ -906,3 +906,13 @@ input.input-send-file {
     line-height: 1;
     vertical-align: middle;
 }
+
+.client-company-name {
+
+}
+
+.client-email {
+    display: block;
+    font-size: 10pt;
+    color: #999999;
+}
