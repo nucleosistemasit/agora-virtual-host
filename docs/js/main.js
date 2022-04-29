@@ -259,6 +259,8 @@ chatSocket.onmessage = function(e) {
             if (data.from_me == false) {
                 let notification = document.querySelector('.inner-inbox-div[data-id="' + data.id + '"]');
                 notification.classList.add("show-notification");
+                var audio = new Audio('./audio/sound_1.wav');
+                audio.play();
             }
         }
         else {
