@@ -15,6 +15,11 @@ function escapeHtml(string) {
     });
 }
 
+function logout() {
+    localStorage.removeItem('authToken');
+    document.location.href = '/';
+}
+
 function sendReply(element) {
     let reply_preview = document.getElementById("replyPreview");
     let reply_chat = document.getElementById("replyChat");

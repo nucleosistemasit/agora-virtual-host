@@ -850,6 +850,11 @@ audio {
 #download-csv {
     background: none;
     border: none;
+}
+
+#logout-button {
+    background: none;
+    border: none;
     float: right;
 }
 
