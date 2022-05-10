@@ -1,4 +1,5 @@
 var chatSocket = null;
+var heartbeat = null;
 var current_page = 1;
 var room_page = 1;
 
@@ -91,6 +92,16 @@ function connectRoom(element) {
     element.classList.remove("show-notification");
 }
 
+function startHeartbeat() {
+    heartbeat = setInterval(function() {
+        chatSocket.send(JSON.stringify({"command": "heartbeat"}));
+    }, 30000);
+}
+
+function stopHeartbeat() {
+    clearInterval(heartbeat);
+}
+
 function debounce(func, wait, immediate) {
     var timeout;
   
@@ -126,6 +137,7 @@ let authToken = localStorage.getItem('authToken');
 chatSocket = new ReconnectingWebSocket('wss://metaversochat.youbot.us/ws/chat/exhibition/?token=' + authToken);
 
 chatSocket.onopen = function(e) {
+    startHeartbeat();
     document.getElementById("chat").removeEventListener("scroll", loadNextPage);
     document.getElementById("room-list").removeEventListener("scroll", loadNextRoom);
     document.getElementById('room-list').innerHTML = "";
@@ -355,6 +367,7 @@ chatSocket.onmessage = function(e) {
 
 chatSocket.onclose = function(e) {
     console.log('host disconnected');
+    stopHeartbeat();
 };
 
 const sendButton = document.getElementById("send-message");
