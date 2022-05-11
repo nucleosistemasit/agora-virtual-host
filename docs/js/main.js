@@ -298,8 +298,6 @@ chatSocket.onmessage = function(e) {
         let messageBlock = document.createElement('div');
         messageBlock.classList.add("message-block");
         document.getElementById('chat').prepend(messageBlock);
-        connectionCount = data.connections;
-        // document.getElementById('conexoes').innerHTML = data.connections;
         for (message of data.messages) {
             printMessage(message, messageBlock, false);
         }
